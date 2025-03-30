@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:chat_and_noti/core/config/bubble_config.dart';
+import 'package:conversation_bubbles/conversation_bubbles.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -12,8 +13,11 @@ import 'package:permission_handler/permission_handler.dart';
 FirebaseMessaging messaging = FirebaseMessaging.instance;
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
+final bubbles = BubblesService.instance;
 
 void initNoti() async {
+  final intentUri = await ConversationBubbles().getIntentUri();
+  log("URL $intentUri");
   final token = await FirebaseMessaging.instance.getToken();
   log("Token $token");
   const AndroidInitializationSettings initializationSettingsAndroid =
@@ -39,7 +43,7 @@ void initNoti() async {
     sound: true,
   );
 
-  initBubble();
+  bubbles.initBubble();
 
   log("Setting authorization status: ${settings.authorizationStatus}");
   if (settings.authorizationStatus == AuthorizationStatus.authorized) {
@@ -54,7 +58,7 @@ void initNoti() async {
         //   imageUrl: message.notification!.android!.imageUrl ?? "",
         // );
 
-        await show(
+        await bubbles.show(
           title: message.notification!.title ?? "",
           body: message.notification!.body ?? "",
           imageUrl: message.notification!.android!.imageUrl ?? "",
@@ -77,8 +81,8 @@ Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
     final String body = message.data['body'] ?? "";
     final String imageUrl = message.data['imageUrl'] ?? "";
 
-    // await show(title: title, body: body, imageUrl: imageUrl);
-    await showNoti(title: title, body: body, imageUrl: imageUrl);
+    bubbles.show(title: title, body: body, imageUrl: imageUrl);
+    // await showNoti(title: title, body: body, imageUrl: imageUrl);
   }
 }
 

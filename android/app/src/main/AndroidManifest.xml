@@ -11,7 +11,8 @@
     <application
         android:label="chat_and_noti"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/ic_launcher"
+        android:enableOnBackInvokedCallback="true">
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -37,8 +38,8 @@
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data
-                    android:host="com.example.ober_version_2"
-                    android:pathPattern="/chat/*"
+                    android:host="chat_and_noti.example.com"
+                    android:pathPattern="/chat-screen/*"
                     android:scheme="https" />
             </intent-filter>
         </activity>
@@ -55,8 +56,8 @@
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data
-            android:host="com.example.ober_version_2"
-            android:pathPattern="/chat/*"
+            android:host="chat_and_noti.example.com"
+            android:pathPattern="/chat-screen/*"
             android:scheme="https" />
             </intent-filter>
         </activity>
