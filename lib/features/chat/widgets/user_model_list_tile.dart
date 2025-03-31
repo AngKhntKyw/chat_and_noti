@@ -19,13 +19,9 @@ class UserModelListTile extends StatelessWidget {
         );
       },
       leading: CircleAvatar(
-        backgroundColor: Theme.of(context).colorScheme.primary,
-        radius: ScreenSize.getScreenSize(context).height / 38,
-        child: CircleAvatar(
-          backgroundColor: Theme.of(context).colorScheme.onPrimary,
-          radius: ScreenSize.getScreenSize(context).height / 40,
-          backgroundImage: CachedNetworkImageProvider(userModel.profile_url),
-        ),
+        backgroundColor: Theme.of(context).colorScheme.onPrimary,
+        radius: ScreenSize.getScreenSize(context).height / 46,
+        backgroundImage: CachedNetworkImageProvider(userModel.profile_url),
       ),
       title: Text(userModel.name),
     );

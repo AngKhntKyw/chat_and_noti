@@ -2,6 +2,8 @@ import 'dart:developer';
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:chat_and_noti/core/config/bubble_config.dart';
+import 'package:chat_and_noti/features/auth/model/user_model.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:conversation_bubbles/conversation_bubbles.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +15,7 @@ import 'package:permission_handler/permission_handler.dart';
 FirebaseMessaging messaging = FirebaseMessaging.instance;
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
+final fireStore = FirebaseFirestore.instance;
 final bubbles = BubblesService.instance;
 
 void initNoti() async {
@@ -49,18 +52,24 @@ void initNoti() async {
     FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
       if (message.notification != null) {
         // Extract data payload
+        log("Noti ${message.data['key1']}");
+        DocumentSnapshot<Map<String, dynamic>> documentSnapshot =
+            await fireStore.collection('users').doc(message.data['key1']).get();
 
-        await showNoti(
-          title: message.notification!.title ?? "",
-          body: message.notification!.body ?? "",
-          imageUrl: message.notification!.android!.imageUrl ?? "",
-        );
+        final userModelMap = documentSnapshot.data() as Map<String, dynamic>;
+        final userModel = UserModel.fromJson(userModelMap);
 
-        // await bubbles.show(
+        // await showNoti(
         //   title: message.notification!.title ?? "",
         //   body: message.notification!.body ?? "",
         //   imageUrl: message.notification!.android!.imageUrl ?? "",
         // );
+
+        await bubbles.show(
+          userModel,
+          message.notification!.body ?? "Body NULL",
+          shouldAutoExpand: false,
+        );
       }
     });
 
@@ -80,7 +89,24 @@ Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
     final String imageUrl = message.data['imageUrl'] ?? "";
 
     // bubbles.show(title: title, body: body, imageUrl: imageUrl);
-    await showNoti(title: title, body: body, imageUrl: imageUrl);
+    // await showNoti(title: title, body: body, imageUrl: imageUrl);
+    DocumentSnapshot<Map<String, dynamic>> documentSnapshot =
+        await fireStore.collection('users').doc(message.data['key1']).get();
+
+    final userModelMap = documentSnapshot.data() as Map<String, dynamic>;
+    final userModel = UserModel.fromJson(userModelMap);
+
+    // await showNoti(
+    //   title: message.notification!.title ?? "",
+    //   body: message.notification!.body ?? "",
+    //   imageUrl: message.notification!.android!.imageUrl ?? "",
+    // );
+
+    await bubbles.show(
+      userModel,
+      message.notification!.body ?? "Body NULL",
+      shouldAutoExpand: false,
+    );
   }
 }
 

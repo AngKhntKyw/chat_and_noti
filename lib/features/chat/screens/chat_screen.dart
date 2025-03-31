@@ -1,4 +1,6 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:chat_and_noti/core/config/bubble_config.dart';
+import 'package:chat_and_noti/core/constant/screen_size.dart';
 import 'package:chat_and_noti/features/auth/model/user_model.dart';
 import 'package:chat_and_noti/features/auth/widgets/common_text_form_field.dart';
 import 'package:chat_and_noti/features/chat/model/message.dart';
@@ -46,14 +48,33 @@ class ChatScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(otherUser.name),
+        titleSpacing: 0,
+        title: Row(
+          children: [
+            if (bubbles.isInBubble) const SizedBox(width: 16),
+            CircleAvatar(
+              backgroundColor: Theme.of(context).colorScheme.onPrimary,
+              radius: ScreenSize.getScreenSize(context).height / 55,
+              backgroundImage: CachedNetworkImageProvider(
+                otherUser.profile_url,
+              ),
+            ),
+            const SizedBox(width: 8),
+            Text(otherUser.name),
+          ],
+        ),
         actions: [
-          IconButton(
-            onPressed: () {
-              bubbles.show(otherUser, '', shouldAutoExpand: true);
-            },
-            icon: Icon(Icons.open_in_new),
-          ),
+          if (!bubbles.isInBubble)
+            IconButton(
+              onPressed: () async {
+                await bubbles.show(
+                  otherUser,
+                  'This is message',
+                  shouldAutoExpand: false,
+                );
+              },
+              icon: Icon(Icons.open_in_new),
+            ),
         ],
       ),
       body: StreamBuilder(
