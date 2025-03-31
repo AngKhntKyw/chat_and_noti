@@ -43,8 +43,6 @@ void initNoti() async {
     sound: true,
   );
 
-  bubbles.initBubble();
-
   log("Setting authorization status: ${settings.authorizationStatus}");
   if (settings.authorizationStatus == AuthorizationStatus.authorized) {
     // on message
@@ -52,17 +50,17 @@ void initNoti() async {
       if (message.notification != null) {
         // Extract data payload
 
-        // await showNoti(
-        //   title: message.notification!.title ?? "",
-        //   body: message.notification!.body ?? "",
-        //   imageUrl: message.notification!.android!.imageUrl ?? "",
-        // );
-
-        await bubbles.show(
+        await showNoti(
           title: message.notification!.title ?? "",
           body: message.notification!.body ?? "",
           imageUrl: message.notification!.android!.imageUrl ?? "",
         );
+
+        // await bubbles.show(
+        //   title: message.notification!.title ?? "",
+        //   body: message.notification!.body ?? "",
+        //   imageUrl: message.notification!.android!.imageUrl ?? "",
+        // );
       }
     });
 
@@ -81,8 +79,8 @@ Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
     final String body = message.data['body'] ?? "";
     final String imageUrl = message.data['imageUrl'] ?? "";
 
-    bubbles.show(title: title, body: body, imageUrl: imageUrl);
-    // await showNoti(title: title, body: body, imageUrl: imageUrl);
+    // bubbles.show(title: title, body: body, imageUrl: imageUrl);
+    await showNoti(title: title, body: body, imageUrl: imageUrl);
   }
 }
 

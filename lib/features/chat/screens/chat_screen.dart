@@ -50,12 +50,7 @@ class ChatScreen extends ConsumerWidget {
         actions: [
           IconButton(
             onPressed: () {
-              bubbles.show(
-                title: '',
-                body: '',
-                imageUrl: '',
-                otherUser: otherUser,
-              );
+              bubbles.show(otherUser, '', shouldAutoExpand: true);
             },
             icon: Icon(Icons.open_in_new),
           ),

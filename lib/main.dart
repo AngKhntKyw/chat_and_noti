@@ -1,7 +1,6 @@
 import 'dart:developer';
-
 import 'package:chat_and_noti/auth_gate.dart';
-import 'package:chat_and_noti/core/config/notification_config.dart';
+import 'package:chat_and_noti/core/config/bubble_config.dart';
 import 'package:chat_and_noti/features/auth/model/user_model.dart';
 import 'package:chat_and_noti/features/chat/screens/chat_screen.dart';
 import 'package:chat_and_noti/features/chat/screens/home_screen.dart';
@@ -14,7 +13,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  initNoti();
+
+  await BubblesService.instance.init();
+
   runApp(ProviderScope(child: const MyApp()));
 }
 
@@ -23,16 +24,29 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bubbles = BubblesService.instance;
+    log("IsBubble ${bubbles.isInBubble}");
+
     return MaterialApp(
       title: 'Chat & Noti',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
+
       initialRoute: '/',
       onGenerateInitialRoutes: (_) {
-        return [MaterialPageRoute(builder: (_) => const AuthGate())];
+        return [
+          if (!bubbles.isInBubble)
+            MaterialPageRoute(builder: (_) => const AuthGate()),
+          if (bubbles.launchUserModel != null)
+            MaterialPageRoute(
+              builder: (_) => ChatScreen(otherUser: bubbles.launchUserModel!),
+            ),
+        ];
       },
+
+      //
       onGenerateRoute: (settings) {
         if (settings.name == AuthGate.routeName) {
           return MaterialPageRoute(
