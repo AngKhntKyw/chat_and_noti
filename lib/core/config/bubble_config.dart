@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'package:chat_and_noti/features/auth/model/user_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:conversation_bubbles/conversation_bubbles.dart';
@@ -23,21 +24,18 @@ class BubblesService {
       fqBubbleActivity: 'com.example.chat_and_noti.BubbleActivity',
     );
     _isInBubble = await _conversationBubblesPlugin.isInBubble();
-
     //
     final intentUri = await ConversationBubbles().getIntentUri();
     if (intentUri != null) {
       String id = intentUri.split('/').last;
-      await getUserById(userId: id);
+      DocumentSnapshot<Map<String, dynamic>> documentSnapshot =
+          await fireStore.collection('users').doc(id).get();
+
+      final userModel = documentSnapshot.data() as Map<String, dynamic>;
+      _launchUserModel = UserModel.fromJson(userModel);
+    } else {
+      log("Intent URL is null");
     }
-  }
-
-  Future<void> getUserById({required String userId}) async {
-    DocumentSnapshot<Map<String, dynamic>> documentSnapshot =
-        await fireStore.collection('users').doc(userId).get();
-
-    final userModel = documentSnapshot.data() as Map<String, dynamic>;
-    _launchUserModel = UserModel.fromJson(userModel);
   }
 
   Future<void> show(
@@ -48,7 +46,6 @@ class BubblesService {
     final http.Response response = await http.get(
       Uri.parse(otherUser.profile_url),
     );
-
     await _conversationBubblesPlugin.show(
       notificationId: otherUser.hashCode,
       body: messageText,
@@ -57,8 +54,8 @@ class BubblesService {
 
       channel: NotificationChannel(
         id: 'chat',
-        name: 'chat name',
-        description: 'chat description',
+        name: 'chat',
+        description: 'chat',
       ),
 
       person: Person(
@@ -67,8 +64,10 @@ class BubblesService {
         icon: response.bodyBytes,
       ),
 
-      isFromUser: true,
-      shouldMinimize: true,
+      isFromUser: shouldAutoExpand,
+      shouldMinimize: shouldAutoExpand,
+      appIcon: '@mipmap/ic_launcher',
+      fqBubbleActivity: 'com.example.chat_and_noti.BubbleActivity',
     );
   }
 }

@@ -1,6 +1,6 @@
 import 'package:chat_and_noti/auth_gate.dart';
 import 'package:chat_and_noti/core/config/bubble_config.dart';
-import 'package:chat_and_noti/core/config/notification_config.dart';
+import 'package:chat_and_noti/core/config/noti_config.dart';
 import 'package:chat_and_noti/features/auth/model/user_model.dart';
 import 'package:chat_and_noti/features/chat/screens/chat_screen.dart';
 import 'package:chat_and_noti/features/chat/screens/home_screen.dart';
@@ -15,7 +15,8 @@ void main() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   await BubblesService.instance.init();
-  initNoti();
+  // initNoti();
+  await NotiConfig().initNoti();
   runApp(ProviderScope(child: const MyApp()));
 }
 
@@ -27,6 +28,9 @@ class MyApp extends StatelessWidget {
     final bubbles = BubblesService.instance;
 
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
+
+      //
       initialRoute: AuthGate.routeName,
 
       //

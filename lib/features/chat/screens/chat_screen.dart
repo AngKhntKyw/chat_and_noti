@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:chat_and_noti/core/config/bubble_config.dart';
 import 'package:chat_and_noti/core/constant/screen_size.dart';
@@ -9,6 +12,8 @@ import 'package:chat_and_noti/features/chat/widgets/message_tile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:googleapis_auth/auth_io.dart' as auth;
+import 'package:http/http.dart' as http;
 
 class ChatScreen extends ConsumerWidget {
   final UserModel otherUser;
@@ -70,7 +75,7 @@ class ChatScreen extends ConsumerWidget {
                 await bubbles.show(
                   otherUser,
                   'This is message',
-                  shouldAutoExpand: false,
+                  shouldAutoExpand: true,
                 );
               },
               icon: Icon(Icons.open_in_new),
