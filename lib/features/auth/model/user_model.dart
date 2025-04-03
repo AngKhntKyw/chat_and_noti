@@ -12,6 +12,7 @@ class UserModel with _$UserModel {
     required String email,
     required String fcm_token,
     required String profile_url,
+    required int user_serial_number,
   }) = _UserModel;
 
   factory UserModel.fromJson(Map<String, dynamic> json) =>

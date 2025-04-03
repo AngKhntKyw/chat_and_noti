@@ -1,4 +1,5 @@
 import 'package:chat_and_noti/core/constant/profile_image.dart';
+import 'package:chat_and_noti/core/util/generate_date_time_int.dart';
 import 'package:chat_and_noti/features/auth/model/user_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -26,6 +27,14 @@ class AuthDatasource {
         email: email,
         password: password,
       );
+      final token = await fireMessage.getToken();
+      if (token != null && fireAuth.currentUser != null) {
+        await fireStore
+            .collection('users')
+            .doc(fireAuth.currentUser!.uid)
+            .update({"fcm_token": token});
+      }
+
       return user;
     } catch (e) {
       ScaffoldMessenger.of(
@@ -56,6 +65,7 @@ class AuthDatasource {
         email: email,
         fcm_token: fcmToken!,
         profile_url: defaultAvatar,
+        user_serial_number: generateDateTimeInt(),
       );
 
       await fireStore

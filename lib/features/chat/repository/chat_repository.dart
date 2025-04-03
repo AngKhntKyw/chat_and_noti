@@ -6,7 +6,7 @@ abstract class ChatRepository {
   Stream<List<UserModel>> getAllUsers();
   Future<void> sendMessage({
     required Message message,
-    required String otherUserId,
+    required UserModel otherUser,
     required BuildContext context,
   });
   Stream<List<Message>> getMessages({

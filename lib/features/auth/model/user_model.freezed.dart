@@ -26,6 +26,7 @@ mixin _$UserModel {
   String get email => throw _privateConstructorUsedError;
   String get fcm_token => throw _privateConstructorUsedError;
   String get profile_url => throw _privateConstructorUsedError;
+  int get user_serial_number => throw _privateConstructorUsedError;
 
   /// Serializes this UserModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -48,6 +49,7 @@ abstract class $UserModelCopyWith<$Res> {
     String email,
     String fcm_token,
     String profile_url,
+    int user_serial_number,
   });
 }
 
@@ -71,6 +73,7 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
     Object? email = null,
     Object? fcm_token = null,
     Object? profile_url = null,
+    Object? user_serial_number = null,
   }) {
     return _then(
       _value.copyWith(
@@ -99,6 +102,11 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
                     ? _value.profile_url
                     : profile_url // ignore: cast_nullable_to_non_nullable
                         as String,
+            user_serial_number:
+                null == user_serial_number
+                    ? _value.user_serial_number
+                    : user_serial_number // ignore: cast_nullable_to_non_nullable
+                        as int,
           )
           as $Val,
     );
@@ -120,6 +128,7 @@ abstract class _$$UserModelImplCopyWith<$Res>
     String email,
     String fcm_token,
     String profile_url,
+    int user_serial_number,
   });
 }
 
@@ -142,6 +151,7 @@ class __$$UserModelImplCopyWithImpl<$Res>
     Object? email = null,
     Object? fcm_token = null,
     Object? profile_url = null,
+    Object? user_serial_number = null,
   }) {
     return _then(
       _$UserModelImpl(
@@ -170,6 +180,11 @@ class __$$UserModelImplCopyWithImpl<$Res>
                 ? _value.profile_url
                 : profile_url // ignore: cast_nullable_to_non_nullable
                     as String,
+        user_serial_number:
+            null == user_serial_number
+                ? _value.user_serial_number
+                : user_serial_number // ignore: cast_nullable_to_non_nullable
+                    as int,
       ),
     );
   }
@@ -184,6 +199,7 @@ class _$UserModelImpl extends _UserModel {
     required this.email,
     required this.fcm_token,
     required this.profile_url,
+    required this.user_serial_number,
   }) : super._();
 
   factory _$UserModelImpl.fromJson(Map<String, dynamic> json) =>
@@ -199,10 +215,12 @@ class _$UserModelImpl extends _UserModel {
   final String fcm_token;
   @override
   final String profile_url;
+  @override
+  final int user_serial_number;
 
   @override
   String toString() {
-    return 'UserModel(user_id: $user_id, name: $name, email: $email, fcm_token: $fcm_token, profile_url: $profile_url)';
+    return 'UserModel(user_id: $user_id, name: $name, email: $email, fcm_token: $fcm_token, profile_url: $profile_url, user_serial_number: $user_serial_number)';
   }
 
   @override
@@ -216,13 +234,22 @@ class _$UserModelImpl extends _UserModel {
             (identical(other.fcm_token, fcm_token) ||
                 other.fcm_token == fcm_token) &&
             (identical(other.profile_url, profile_url) ||
-                other.profile_url == profile_url));
+                other.profile_url == profile_url) &&
+            (identical(other.user_serial_number, user_serial_number) ||
+                other.user_serial_number == user_serial_number));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, user_id, name, email, fcm_token, profile_url);
+  int get hashCode => Object.hash(
+    runtimeType,
+    user_id,
+    name,
+    email,
+    fcm_token,
+    profile_url,
+    user_serial_number,
+  );
 
   /// Create a copy of UserModel
   /// with the given fields replaced by the non-null parameter values.
@@ -245,6 +272,7 @@ abstract class _UserModel extends UserModel {
     required final String email,
     required final String fcm_token,
     required final String profile_url,
+    required final int user_serial_number,
   }) = _$UserModelImpl;
   const _UserModel._() : super._();
 
@@ -261,6 +289,8 @@ abstract class _UserModel extends UserModel {
   String get fcm_token;
   @override
   String get profile_url;
+  @override
+  int get user_serial_number;
 
   /// Create a copy of UserModel
   /// with the given fields replaced by the non-null parameter values.

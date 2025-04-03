@@ -3,6 +3,7 @@ import 'package:chat_and_noti/features/auth/repository/auth_repository_provider.
 import 'package:chat_and_noti/features/chat/screens/home_screen.dart';
 import 'package:chat_and_noti/features/auth/widgets/common_elevated_button.dart';
 import 'package:chat_and_noti/features/auth/widgets/common_text_form_field.dart';
+import 'package:chat_and_noti/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -26,8 +27,7 @@ class SignupScreen extends ConsumerWidget {
             context: ref.context,
           );
       if (userCredential != null) {
-        Navigator.pushNamedAndRemoveUntil(
-          ref.context,
+        navigatorKey.currentState!.pushNamedAndRemoveUntil(
           HomeScreen.routeName,
           (route) => false,
         );
@@ -86,7 +86,7 @@ class SignupScreen extends ConsumerWidget {
 
               TextButton(
                 onPressed: () {
-                  Navigator.pop(context);
+                  navigatorKey.currentState!.pop(context);
                 },
                 child: Text("Already have an account? Login"),
               ),

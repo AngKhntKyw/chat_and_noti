@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:chat_and_noti/core/constant/screen_size.dart';
 import 'package:chat_and_noti/features/auth/model/user_model.dart';
 import 'package:chat_and_noti/features/chat/screens/chat_screen.dart';
+import 'package:chat_and_noti/main.dart';
 import 'package:flutter/material.dart';
 
 class UserModelListTile extends StatelessWidget {
@@ -12,8 +13,7 @@ class UserModelListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       onTap: () {
-        Navigator.pushNamed(
-          context,
+        navigatorKey.currentState!.pushNamed(
           ChatScreen.routeName,
           arguments: userModel,
         );

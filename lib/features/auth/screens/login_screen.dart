@@ -4,6 +4,7 @@ import 'package:chat_and_noti/features/chat/screens/home_screen.dart';
 import 'package:chat_and_noti/features/auth/screens/signup_screen.dart';
 import 'package:chat_and_noti/features/auth/widgets/common_elevated_button.dart';
 import 'package:chat_and_noti/features/auth/widgets/common_text_form_field.dart';
+import 'package:chat_and_noti/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -24,8 +25,7 @@ class LoginScreen extends ConsumerWidget {
             context: ref.context,
           );
       if (userCredential != null) {
-        Navigator.pushNamedAndRemoveUntil(
-          ref.context,
+        navigatorKey.currentState!.pushNamedAndRemoveUntil(
           HomeScreen.routeName,
           (route) => false,
         );
@@ -75,7 +75,7 @@ class LoginScreen extends ConsumerWidget {
 
               TextButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, SignupScreen.routeName);
+                  navigatorKey.currentState!.pushNamed(SignupScreen.routeName);
                 },
                 child: Text("Don't have an account? Sign up"),
               ),

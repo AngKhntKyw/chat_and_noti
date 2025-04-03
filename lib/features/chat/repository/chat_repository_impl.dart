@@ -27,12 +27,12 @@ class ChatRepositoryImpl extends ChatRepository {
   @override
   Future<void> sendMessage({
     required Message message,
-    required String otherUserId,
+    required UserModel otherUser,
     required BuildContext context,
   }) async {
     await chatDatasource.sendMessage(
       message: message,
-      otherUserId: otherUserId,
+      otherUser: otherUser,
       context: context,
     );
   }

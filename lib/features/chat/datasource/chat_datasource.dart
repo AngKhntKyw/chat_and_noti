@@ -5,7 +5,6 @@ import 'package:chat_and_noti/features/chat/model/message.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:googleapis_auth/auth_io.dart' as auth;
 import 'package:http/http.dart' as http;
@@ -18,7 +17,6 @@ class ChatDatasource {
   final fireAuth = FirebaseAuth.instance;
   final fireStore = FirebaseFirestore.instance;
   final fireMessage = FirebaseMessaging.instance;
-  final fireStorage = FirebaseStorage.instance;
 
   Stream<List<UserModel>> getAllUsers() {
     return fireStore
@@ -34,26 +32,26 @@ class ChatDatasource {
 
   Future<void> sendMessage({
     required Message message,
-    required String otherUserId,
+    required UserModel otherUser,
     required BuildContext context,
   }) async {
     await fireStore
         .collection('users')
         .doc(fireAuth.currentUser!.uid)
         .collection('chats')
-        .doc(otherUserId)
+        .doc(otherUser.user_id)
         .collection('messages')
         .add(message.toJson());
 
     await fireStore
         .collection('users')
-        .doc(otherUserId)
+        .doc(otherUser.user_id)
         .collection('chats')
         .doc(fireAuth.currentUser!.uid)
         .collection('messages')
         .add(message.toJson());
 
-    sendFirebaseMessage(otherUserId);
+    sendFirebaseMessage(otherUser.fcm_token, message);
   }
 
   Stream<List<Message>> getMessages({
@@ -116,7 +114,7 @@ class ChatDatasource {
     return credentials.accessToken.data;
   }
 
-  void sendFirebaseMessage(String token) async {
+  void sendFirebaseMessage(String token, Message messageModel) async {
     String serverKey = await getAcessToken();
 
     String endPointFirebaseCloudMessaging =
@@ -124,18 +122,15 @@ class ChatDatasource {
 
     final Map<String, dynamic> message = {
       'message': {
-        'token':
-            "fQwcKgzRSAGKDFADg7et6U:APA91bEM--BlqfnbFoO2dF-iFndKoeAvynQjvJUxGAk-ZQLwTsZiMbuoGE7sBErAWDWSDMO9TFbtvr8h7410NLaF6fXJq7dBVxU895Y2KxWxJxI7UACRAE0",
+        'token': token,
         'notification': {
-          'title': 'Hello from Flutter!',
-          'body': 'This is a test message sent via FCM.',
-          'image':
-              'https://plus.unsplash.com/premium_photo-1670148434900-5f0af77ba500?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+          'title': "${fireAuth.currentUser!.displayName} sends you a message",
+          'body': messageModel.message,
         },
         'data': {
           'click_action': 'FLUTTER_NOTIFICATION_CLICK',
           'message': 'Custom data payload',
-          'key1': "7v6XTglK2nTDAKUndIG7LlctvWD2",
+          'key1': fireAuth.currentUser!.uid,
         },
       },
     };
@@ -148,7 +143,6 @@ class ChatDatasource {
       },
       body: jsonEncode(message),
     );
-
     if (response.statusCode == 200) {
       log("FCM message sent successfully!");
     } else {

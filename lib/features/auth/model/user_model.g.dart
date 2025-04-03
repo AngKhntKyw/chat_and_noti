@@ -13,6 +13,7 @@ _$UserModelImpl _$$UserModelImplFromJson(Map<String, dynamic> json) =>
       email: json['email'] as String,
       fcm_token: json['fcm_token'] as String,
       profile_url: json['profile_url'] as String,
+      user_serial_number: (json['user_serial_number'] as num).toInt(),
     );
 
 Map<String, dynamic> _$$UserModelImplToJson(_$UserModelImpl instance) =>
@@ -22,4 +23,5 @@ Map<String, dynamic> _$$UserModelImplToJson(_$UserModelImpl instance) =>
       'email': instance.email,
       'fcm_token': instance.fcm_token,
       'profile_url': instance.profile_url,
+      'user_serial_number': instance.user_serial_number,
     };

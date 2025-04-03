@@ -47,7 +47,7 @@ class BubblesService {
       Uri.parse(otherUser.profile_url),
     );
     await _conversationBubblesPlugin.show(
-      notificationId: otherUser.hashCode,
+      notificationId: otherUser.user_serial_number,
       body: messageText,
       contentUri:
           'https://chat_and_noti.example.com/chat-screen/${otherUser.user_id}',
