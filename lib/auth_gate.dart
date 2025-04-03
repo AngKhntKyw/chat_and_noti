@@ -1,5 +1,5 @@
-import 'package:chat_and_noti/features/chat/screens/home_screen.dart';
 import 'package:chat_and_noti/features/auth/screens/login_screen.dart';
+import 'package:chat_and_noti/navigation_bar_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -11,6 +11,8 @@ class AuthGate extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final fireAuth = FirebaseAuth.instance;
-    return fireAuth.currentUser == null ? LoginScreen() : const HomeScreen();
+    return fireAuth.currentUser == null
+        ? LoginScreen()
+        : const NavigationBarScreen();
   }
 }
