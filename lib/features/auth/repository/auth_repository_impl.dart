@@ -1,4 +1,5 @@
 import 'package:chat_and_noti/features/auth/datasource/auth_datasource.dart';
+import 'package:chat_and_noti/features/auth/model/user_model.dart';
 import 'package:chat_and_noti/features/auth/repository/auth_repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -38,5 +39,10 @@ class AuthRepositoryImpl extends AuthRepository {
       password: password,
       context: context,
     );
+  }
+
+  @override
+  Stream<UserModel> getUserById({required String userId}) {
+    return authDatasource.getUserById(userId: userId);
   }
 }

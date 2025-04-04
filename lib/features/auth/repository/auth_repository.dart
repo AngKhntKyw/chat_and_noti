@@ -1,3 +1,4 @@
+import 'package:chat_and_noti/features/auth/model/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -16,4 +17,5 @@ abstract class AuthRepository {
   });
 
   Future<void> logout({required BuildContext context});
+  Stream<UserModel> getUserById({required String userId});
 }

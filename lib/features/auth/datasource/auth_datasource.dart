@@ -91,4 +91,12 @@ class AuthDatasource {
       ).showSnackBar(SnackBar(content: Text(e.toString())));
     }
   }
+
+  Stream<UserModel> getUserById({required String userId}) {
+    return fireStore
+        .collection('users')
+        .doc(userId)
+        .snapshots()
+        .map((event) => UserModel.fromJson(event.data()!));
+  }
 }

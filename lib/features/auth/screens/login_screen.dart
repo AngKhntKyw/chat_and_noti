@@ -1,10 +1,10 @@
 import 'package:chat_and_noti/core/constant/screen_size.dart';
 import 'package:chat_and_noti/features/auth/repository/auth_repository_provider.dart';
-import 'package:chat_and_noti/features/chat/screens/home_screen.dart';
 import 'package:chat_and_noti/features/auth/screens/signup_screen.dart';
 import 'package:chat_and_noti/features/auth/widgets/common_elevated_button.dart';
 import 'package:chat_and_noti/features/auth/widgets/common_text_form_field.dart';
 import 'package:chat_and_noti/main.dart';
+import 'package:chat_and_noti/navigation_bar_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -26,7 +26,7 @@ class LoginScreen extends ConsumerWidget {
           );
       if (userCredential != null) {
         navigatorKey.currentState!.pushNamedAndRemoveUntil(
-          HomeScreen.routeName,
+          NavigationBarScreen.routeName,
           (route) => false,
         );
       }

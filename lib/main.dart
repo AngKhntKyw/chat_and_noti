@@ -6,7 +6,10 @@ import 'package:chat_and_noti/features/auth/model/user_model.dart';
 import 'package:chat_and_noti/features/chat/screens/chat_screen.dart';
 import 'package:chat_and_noti/features/chat/screens/home_screen.dart';
 import 'package:chat_and_noti/features/auth/screens/signup_screen.dart';
+import 'package:chat_and_noti/features/feed/screens/add_feed_screen.dart';
+import 'package:chat_and_noti/features/feed/screens/feed_screen.dart';
 import 'package:chat_and_noti/firebase_options.dart';
+import 'package:chat_and_noti/navigation_bar_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -62,7 +65,16 @@ class MyApp extends StatelessWidget {
             builder: (_) => const AuthGate(),
             settings: settings,
           );
-        } else if (settings.name == HomeScreen.routeName) {
+        }
+        // NavigationBarScreen
+        else if (settings.name == NavigationBarScreen.routeName) {
+          return MaterialPageRoute(
+            builder: (_) => const NavigationBarScreen(),
+            settings: settings,
+          );
+        }
+        //chat
+        else if (settings.name == HomeScreen.routeName) {
           return MaterialPageRoute(
             builder: (_) => HomeScreen(),
             settings: settings,
@@ -79,6 +91,19 @@ class MyApp extends StatelessWidget {
             settings: settings,
           );
         }
+        // feed
+        else if (settings.name == FeedScreen.routeName) {
+          return MaterialPageRoute(
+            builder: (_) => FeedScreen(),
+            settings: settings,
+          );
+        } else if (settings.name == AddFeedScreen.routeName) {
+          return MaterialPageRoute(
+            builder: (_) => AddFeedScreen(),
+            settings: settings,
+          );
+        }
+
         return null;
       },
     );

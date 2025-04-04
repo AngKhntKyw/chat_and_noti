@@ -3,6 +3,8 @@ import 'package:chat_and_noti/features/feed/screens/feed_screen.dart';
 import 'package:flutter/material.dart';
 
 class NavigationBarScreen extends StatefulWidget {
+  static const routeName = '/navigation-bar-screen';
+
   const NavigationBarScreen({super.key});
 
   @override
@@ -18,6 +20,9 @@ class _NavigationBarScreenState extends State<NavigationBarScreen> {
     return Scaffold(
       body: pages[currentIndex],
       bottomNavigationBar: BottomNavigationBar(
+        elevation: 1,
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
         onTap: (value) {
           setState(() {
             currentIndex = value;
@@ -29,12 +34,12 @@ class _NavigationBarScreenState extends State<NavigationBarScreen> {
           BottomNavigationBarItem(
             icon: Icon(Icons.home_outlined),
             activeIcon: Icon(Icons.home),
-            label: 'home',
+            label: 'Home',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.feed_outlined),
             activeIcon: Icon(Icons.feed),
-            label: 'feed',
+            label: 'Feed',
           ),
         ],
       ),
