@@ -889,6 +889,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.1.0"
+  pinch_zoom_release_unzoom:
+    dependency: "direct main"
+    description:
+      name: pinch_zoom_release_unzoom
+      sha256: aa57f8f047d926cc5baaa6ffcded0aa18fd279f3ac0e811eb264a655c0b7532d
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.0"
   platform:
     dependency: transitive
     description:
@@ -1102,6 +1110,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.7.4"
+  tiktok_tap_heart_animation:
+    dependency: "direct main"
+    description:
+      name: tiktok_tap_heart_animation
+      sha256: "978787d965aebf25b8a5bbe29f525a858be26097181e278c709b7020e1742182"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.2"
   timeago:
     dependency: "direct main"
     description:

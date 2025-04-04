@@ -8,6 +8,8 @@ import 'package:chat_and_noti/features/chat/screens/home_screen.dart';
 import 'package:chat_and_noti/features/auth/screens/signup_screen.dart';
 import 'package:chat_and_noti/features/feed/screens/add_feed_screen.dart';
 import 'package:chat_and_noti/features/feed/screens/feed_screen.dart';
+import 'package:chat_and_noti/features/notification/screens/notification_screen.dart';
+import 'package:chat_and_noti/features/profile/screens/profile_screen.dart';
 import 'package:chat_and_noti/firebase_options.dart';
 import 'package:chat_and_noti/navigation_bar_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -60,20 +62,21 @@ class MyApp extends StatelessWidget {
 
       //
       onGenerateRoute: (settings) {
+        // auth gate
         if (settings.name == AuthGate.routeName) {
           return MaterialPageRoute(
             builder: (_) => const AuthGate(),
             settings: settings,
           );
         }
-        // NavigationBarScreen
+        // navigation bar screen
         else if (settings.name == NavigationBarScreen.routeName) {
           return MaterialPageRoute(
             builder: (_) => const NavigationBarScreen(),
             settings: settings,
           );
         }
-        //chat
+        // chat
         else if (settings.name == HomeScreen.routeName) {
           return MaterialPageRoute(
             builder: (_) => HomeScreen(),
@@ -100,6 +103,20 @@ class MyApp extends StatelessWidget {
         } else if (settings.name == AddFeedScreen.routeName) {
           return MaterialPageRoute(
             builder: (_) => AddFeedScreen(),
+            settings: settings,
+          );
+        }
+        // notification
+        else if (settings.name == NotificationScreen.routeName) {
+          return MaterialPageRoute(
+            builder: (_) => NotificationScreen(),
+            settings: settings,
+          );
+        }
+        // profile
+        else if (settings.name == ProfileScreen.routeName) {
+          return MaterialPageRoute(
+            builder: (_) => ProfileScreen(),
             settings: settings,
           );
         }

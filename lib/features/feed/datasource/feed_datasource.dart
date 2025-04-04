@@ -20,6 +20,7 @@ class FeedDatasource {
   Stream<List<Feed>> getAllFeeds() {
     return fireStore
         .collection('feeds')
+        .orderBy('created_at', descending: true)
         .snapshots(includeMetadataChanges: false)
         .map((snapshot) {
           return snapshot.docs.map((doc) {
