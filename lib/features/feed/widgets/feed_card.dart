@@ -21,11 +21,10 @@ class FeedCard extends StatelessWidget {
         margin: const EdgeInsets.symmetric(vertical: 8),
         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
         decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.onPrimary,
           border: Border.all(
             color: Theme.of(context).colorScheme.primary,
-            strokeAlign: 0.1,
-            width: 0.1,
+            strokeAlign: 0.2,
+            width: 0.2,
           ),
         ),
 

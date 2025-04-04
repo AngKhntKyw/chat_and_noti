@@ -15,6 +15,7 @@ class NavigationBarScreen extends StatefulWidget {
 
 class _NavigationBarScreenState extends State<NavigationBarScreen> {
   int currentIndex = 0;
+
   final pages = [
     const HomeScreen(),
     const FeedScreen(),
@@ -27,7 +28,8 @@ class _NavigationBarScreenState extends State<NavigationBarScreen> {
     return Scaffold(
       body: pages[currentIndex],
       bottomNavigationBar: BottomNavigationBar(
-        elevation: 1,
+        backgroundColor: Colors.transparent,
+        elevation: 0,
         showSelectedLabels: false,
         showUnselectedLabels: false,
         type: BottomNavigationBarType.fixed,

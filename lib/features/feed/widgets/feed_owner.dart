@@ -1,10 +1,10 @@
-import 'package:chat_and_noti/core/constant/screen_size.dart';
 import 'package:chat_and_noti/core/util/change_to_time_ago.dart';
 import 'package:chat_and_noti/features/auth/repository/auth_repository_provider.dart';
 import 'package:chat_and_noti/features/feed/model/feed.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:chat_and_noti/core/constant/screen_size.dart';
 
 class FeedOwner extends ConsumerWidget {
   final Feed feedModel;
