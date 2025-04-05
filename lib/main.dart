@@ -77,7 +77,7 @@ class MyApp extends StatelessWidget {
         // navigation bar screen
         else if (settings.name == NavigationBarScreen.routeName) {
           return MaterialPageRoute(
-            builder: (_) => const NavigationBarScreen(),
+            builder: (_) => NavigationBarScreen(),
             settings: settings,
           );
         }

@@ -1,8 +1,5 @@
-import 'package:chat_and_noti/auth_gate.dart';
-import 'package:chat_and_noti/features/auth/repository/auth_repository_provider.dart';
 import 'package:chat_and_noti/features/chat/repository/chat_repository_provider.dart';
 import 'package:chat_and_noti/features/chat/widgets/user_model_list_tile.dart';
-import 'package:chat_and_noti/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -11,26 +8,10 @@ class HomeScreen extends ConsumerWidget {
 
   const HomeScreen({super.key});
 
-  void logout(WidgetRef ref) async {
-    await ref.read(authRepositoryProvider).logout(context: ref.context);
-    navigatorKey.currentState!.pushNamedAndRemoveUntil(
-      AuthGate.routeName,
-      (route) => false,
-    );
-  }
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Home"),
-        actions: [
-          IconButton(
-            onPressed: () => logout(ref),
-            icon: Icon(Icons.logout_outlined),
-          ),
-        ],
-      ),
+      appBar: AppBar(title: Text("Home")),
 
       body: StreamBuilder(
         stream: ref.read(chatRepositoryProvider).getAllUsers(),

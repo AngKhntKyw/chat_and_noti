@@ -11,8 +11,6 @@ class AuthGate extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final fireAuth = FirebaseAuth.instance;
-    return fireAuth.currentUser == null
-        ? LoginScreen()
-        : const NavigationBarScreen();
+    return fireAuth.currentUser == null ? LoginScreen() : NavigationBarScreen();
   }
 }

@@ -2,19 +2,14 @@ import 'package:chat_and_noti/features/chat/screens/home_screen.dart';
 import 'package:chat_and_noti/features/feed/screens/feed_screen.dart';
 import 'package:chat_and_noti/features/notification/screens/notification_screen.dart';
 import 'package:chat_and_noti/features/profile/screens/profile_screen.dart';
+import 'package:chat_and_noti/navigation_bar_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class NavigationBarScreen extends StatefulWidget {
+class NavigationBarScreen extends ConsumerWidget {
   static const routeName = '/navigation-bar-screen';
 
-  const NavigationBarScreen({super.key});
-
-  @override
-  State<NavigationBarScreen> createState() => _NavigationBarScreenState();
-}
-
-class _NavigationBarScreenState extends State<NavigationBarScreen> {
-  int currentIndex = 0;
+  NavigationBarScreen({super.key});
 
   final pages = [
     const HomeScreen(),
@@ -24,9 +19,9 @@ class _NavigationBarScreenState extends State<NavigationBarScreen> {
   ];
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      body: pages[currentIndex],
+      body: pages[ref.watch(navigationBarProvider)],
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -36,11 +31,9 @@ class _NavigationBarScreenState extends State<NavigationBarScreen> {
         selectedItemColor: Theme.of(context).colorScheme.primary,
         unselectedItemColor: Theme.of(context).colorScheme.onSurface,
         onTap: (value) {
-          setState(() {
-            currentIndex = value;
-          });
+          ref.read(navigationBarProvider.notifier).state = value;
         },
-        currentIndex: currentIndex,
+        currentIndex: ref.watch(navigationBarProvider),
 
         items: const [
           BottomNavigationBarItem(

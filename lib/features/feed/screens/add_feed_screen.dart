@@ -1,21 +1,23 @@
 import 'dart:io';
 import 'package:chat_and_noti/core/constant/screen_size.dart';
 import 'package:chat_and_noti/features/auth/widgets/common_text_form_field.dart';
-import 'package:chat_and_noti/features/feed/datasource/feed_datasource.dart';
+import 'package:chat_and_noti/features/feed/repository/feed_repository_provider.dart';
+import 'package:chat_and_noti/features/notification/repository/notification_repository_provider.dart';
 import 'package:chat_and_noti/main.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 
-class AddFeedScreen extends StatefulWidget {
+class AddFeedScreen extends ConsumerStatefulWidget {
   static const routeName = '/add-feed-screen';
 
   const AddFeedScreen({super.key});
 
   @override
-  State<AddFeedScreen> createState() => _AddFeedScreenState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _AddFeedScreenState();
 }
 
-class _AddFeedScreenState extends State<AddFeedScreen> {
+class _AddFeedScreenState extends ConsumerState<AddFeedScreen> {
   final formKey = GlobalKey<FormState>();
   final feedTextController = TextEditingController();
   File? imageFile;
@@ -31,13 +33,21 @@ class _AddFeedScreenState extends State<AddFeedScreen> {
     }
   }
 
-  void addFeed() async {
+  void addFeed(WidgetRef ref) async {
     if (formKey.currentState!.validate() && imageFile != null) {
-      await FeedDatasource().addFeed(
-        feedText: feedTextController.text,
-        imageFile: imageFile,
-        context: context,
-      );
+      await ref
+          .read(feedRepositoryProvider)
+          .addFeed(
+            feedText: feedTextController.text,
+            imageFile: imageFile,
+            context: context,
+          );
+      await ref
+          .read(notificationRepositoryProvider)
+          .addNotification(
+            notiText: feedTextController.text,
+            context: ref.context,
+          );
       navigatorKey.currentState!.pop();
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -54,7 +64,9 @@ class _AddFeedScreenState extends State<AddFeedScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Add Feed"),
-        actions: [IconButton(onPressed: addFeed, icon: Icon(Icons.check))],
+        actions: [
+          IconButton(onPressed: () => addFeed(ref), icon: Icon(Icons.check)),
+        ],
       ),
       body: Form(
         key: formKey,
