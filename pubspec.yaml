@@ -54,6 +54,7 @@ dependencies:
   pinch_zoom_release_unzoom: ^2.0.0
   tiktok_tap_heart_animation: ^1.0.2
   skeletonizer: ^1.4.3
+  avatar_stack: ^3.0.0
   conversation_bubbles:
     git:
       url: https://github.com/keepdeploying/conversation_bubbles

@@ -66,7 +66,10 @@ class NotificationService {
     FirebaseMessaging.onMessage.listen((message) async {
       if (message.notification != null) {
         DocumentSnapshot<Map<String, dynamic>> documentSnapshot =
-            await fireStore.collection('users').doc(message.data['key1']).get();
+            await fireStore
+                .collection('users')
+                .doc(message.data['sender_id'])
+                .get();
         final userModelMap = documentSnapshot.data() as Map<String, dynamic>;
         final userModel = UserModel.fromJson(userModelMap);
         bubbles.show(userModel, message.notification!.body ?? "BODY NULL");
@@ -124,7 +127,11 @@ class NotificationService {
           autoCancel: true,
           additionalFlags: Int32List.fromList(<int>[4]),
           actions: <AndroidNotificationAction>[
-            AndroidNotificationAction('id_1', 'Action 1',allowGeneratedReplies: true),
+            AndroidNotificationAction(
+              'id_1',
+              'Action 1',
+              allowGeneratedReplies: true,
+            ),
             AndroidNotificationAction('id_2', 'Action 2'),
           ],
         );
@@ -145,7 +152,7 @@ class NotificationService {
     DocumentSnapshot<Map<String, dynamic>> documentSnapshot =
         await fireStore
             .collection('users')
-            .doc(initialMessage.data['key1'])
+            .doc(initialMessage.data['sender_id'])
             .get();
     final userModelMap = documentSnapshot.data() as Map<String, dynamic>;
     final userModel = UserModel.fromJson(userModelMap);
@@ -164,7 +171,7 @@ Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   //
 
   DocumentSnapshot<Map<String, dynamic>> documentSnapshot =
-      await fireStore.collection('users').doc(message.data['key1']).get();
+      await fireStore.collection('users').doc(message.data['sender_id']).get();
   final userModelMap = documentSnapshot.data() as Map<String, dynamic>;
   final userModel = UserModel.fromJson(userModelMap);
   NotificationService.instance.showNoti(

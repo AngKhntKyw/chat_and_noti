@@ -1,10 +1,12 @@
 import 'package:chat_and_noti/core/util/upload_image_to_firestorage.dart';
 import 'package:chat_and_noti/features/feed/model/feed.dart';
+import 'package:chat_and_noti/features/notification/repository/notification_repository_provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:uuid/uuid.dart';
 
 class FeedDatasource {
@@ -29,10 +31,18 @@ class FeedDatasource {
         });
   }
 
+  Stream<Feed> getFeedById({required String feedId}) {
+    return fireStore.collection('feeds').doc(feedId).snapshots().map((
+      snapshot,
+    ) {
+      return Feed.fromJson(snapshot.data()!);
+    });
+  }
+
   Future<void> addFeed({
     required String feedText,
     required imageFile,
-    required BuildContext context,
+    required WidgetRef ref,
   }) async {
     try {
       final id = const Uuid().v1();
@@ -52,10 +62,17 @@ class FeedDatasource {
         );
 
         await docRef.set(feed.toJson());
+        ref
+            .read(notificationRepositoryProvider)
+            .addNotification(
+              notiText: feedText,
+              context: ref.context,
+              notificationId: docRef.id,
+            );
       });
     } catch (e) {
       ScaffoldMessenger.of(
-        context,
+        ref.context,
       ).showSnackBar(SnackBar(content: Text(e.toString())));
     }
   }

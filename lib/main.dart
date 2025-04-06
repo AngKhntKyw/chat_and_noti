@@ -7,6 +7,7 @@ import 'package:chat_and_noti/features/chat/screens/chat_screen.dart';
 import 'package:chat_and_noti/features/chat/screens/home_screen.dart';
 import 'package:chat_and_noti/features/auth/screens/signup_screen.dart';
 import 'package:chat_and_noti/features/feed/screens/add_feed_screen.dart';
+import 'package:chat_and_noti/features/feed/screens/feed_detail_screen.dart';
 import 'package:chat_and_noti/features/feed/screens/feed_screen.dart';
 import 'package:chat_and_noti/features/notification/screens/notification_screen.dart';
 import 'package:chat_and_noti/features/profile/screens/profile_screen.dart';
@@ -108,6 +109,12 @@ class MyApp extends StatelessWidget {
         } else if (settings.name == AddFeedScreen.routeName) {
           return MaterialPageRoute(
             builder: (_) => AddFeedScreen(),
+            settings: settings,
+          );
+        } else if (settings.name == FeedDetailScreen.routeName) {
+          final feedId = settings.arguments as String;
+          return MaterialPageRoute(
+            builder: (_) => FeedDetailScreen(feedId: feedId),
             settings: settings,
           );
         }

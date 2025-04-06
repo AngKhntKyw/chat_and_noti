@@ -1,7 +1,7 @@
 import 'package:chat_and_noti/features/feed/datasource/feed_datasource.dart';
 import 'package:chat_and_noti/features/feed/model/feed.dart';
 import 'package:chat_and_noti/features/feed/repository/feed_repository.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class FeedRepositoryImpl extends FeedRepository {
   final FeedDatasource feedDatasource;
@@ -11,17 +11,22 @@ class FeedRepositoryImpl extends FeedRepository {
   Future<void> addFeed({
     required String feedText,
     required imageFile,
-    required BuildContext context,
+    required WidgetRef ref,
   }) async {
     return feedDatasource.addFeed(
       feedText: feedText,
       imageFile: imageFile,
-      context: context,
+      ref: ref,
     );
   }
 
   @override
   Stream<List<Feed>> getAllFeeds() {
     return feedDatasource.getAllFeeds();
+  }
+
+  @override
+  Stream<Feed> getFeedById({required String feedId}) {
+    return feedDatasource.getFeedById(feedId: feedId);
   }
 }

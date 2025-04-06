@@ -79,7 +79,9 @@ class ProfileScreen extends ConsumerWidget {
 
                 Container(
                   decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.inversePrimary,
+                    color: Theme.of(
+                      context,
+                    ).colorScheme.primary.withValues(alpha: 0.5),
                     borderRadius: BorderRadius.circular(20),
                   ),
                   margin: const EdgeInsets.all(10),

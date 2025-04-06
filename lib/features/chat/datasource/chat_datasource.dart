@@ -130,7 +130,8 @@ class ChatDatasource {
         'data': {
           'click_action': 'FLUTTER_NOTIFICATION_CLICK',
           'message': 'Custom data payload',
-          'key1': fireAuth.currentUser!.uid,
+          'sender_id': fireAuth.currentUser!.uid,
+          'type': 'message',
         },
       },
     };

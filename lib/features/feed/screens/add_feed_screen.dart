@@ -2,7 +2,6 @@ import 'dart:io';
 import 'package:chat_and_noti/core/constant/screen_size.dart';
 import 'package:chat_and_noti/features/auth/widgets/common_text_form_field.dart';
 import 'package:chat_and_noti/features/feed/repository/feed_repository_provider.dart';
-import 'package:chat_and_noti/features/notification/repository/notification_repository_provider.dart';
 import 'package:chat_and_noti/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -40,14 +39,9 @@ class _AddFeedScreenState extends ConsumerState<AddFeedScreen> {
           .addFeed(
             feedText: feedTextController.text,
             imageFile: imageFile,
-            context: context,
+            ref: ref,
           );
-      await ref
-          .read(notificationRepositoryProvider)
-          .addNotification(
-            notiText: feedTextController.text,
-            context: ref.context,
-          );
+
       navigatorKey.currentState!.pop();
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
