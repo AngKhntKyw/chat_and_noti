@@ -70,31 +70,33 @@ class _AddFeedScreenState extends ConsumerState<AddFeedScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Expanded(
-                child: Column(
-                  children: [
-                    CommonTextFormField(
-                      controller: feedTextController,
-                      hintText: 'Something .....',
-                      maxLines: 8,
-                    ),
-                    SizedBox(
-                      height: ScreenSize.getScreenSize(context).height / 40,
-                    ),
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      CommonTextFormField(
+                        controller: feedTextController,
+                        hintText: 'Something .....',
+                        maxLines: 8,
+                      ),
+                      SizedBox(
+                        height: ScreenSize.getScreenSize(context).height / 40,
+                      ),
 
-                    if (imageFile != null)
-                      InkWell(
-                        onTap: pickImage,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(8),
-                          child: Image.file(
-                            imageFile!,
-                            width: ScreenSize.getScreenSize(context).width,
-                            height: ScreenSize.getScreenSize(context).width,
-                            fit: BoxFit.cover,
+                      if (imageFile != null)
+                        InkWell(
+                          onTap: pickImage,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(8),
+                            child: Image.file(
+                              imageFile!,
+                              width: ScreenSize.getScreenSize(context).width,
+                              height: ScreenSize.getScreenSize(context).width,
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         ),
-                      ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
               IconButton(onPressed: pickImage, icon: Icon(Icons.image)),

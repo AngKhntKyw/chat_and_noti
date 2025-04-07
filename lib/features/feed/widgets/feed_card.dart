@@ -49,17 +49,20 @@ class FeedCard extends StatelessWidget {
 
               SizedBox(height: ScreenSize.getScreenSize(context).height / 40),
 
-              PinchZoomReleaseUnzoomWidget(
-                minScale: 0.8,
-                maxScale: 4,
-                resetDuration: const Duration(milliseconds: 200),
-                boundaryMargin: const EdgeInsets.only(bottom: 0),
-                clipBehavior: Clip.none,
-                useOverlay: true,
-                maxOverlayOpacity: 0.5,
-                overlayColor: Colors.black,
-                fingersRequiredToPinch: 2,
-                child: CommonNetworkImage(imageUrl: feedModel.image),
+              Hero(
+                tag: feedModel.image,
+                child: PinchZoomReleaseUnzoomWidget(
+                  minScale: 0.8,
+                  maxScale: 4,
+                  resetDuration: const Duration(milliseconds: 200),
+                  boundaryMargin: const EdgeInsets.only(bottom: 0),
+                  clipBehavior: Clip.none,
+                  useOverlay: true,
+                  maxOverlayOpacity: 0.5,
+                  overlayColor: Colors.black,
+                  fingersRequiredToPinch: 2,
+                  child: CommonNetworkImage(imageUrl: feedModel.image),
+                ),
               ),
             ],
           ),

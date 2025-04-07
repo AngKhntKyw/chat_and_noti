@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'package:chat_and_noti/auth_gate.dart';
 import 'package:chat_and_noti/core/config/bubble_service.dart';
+import 'package:chat_and_noti/core/config/local_notification_service.dart';
 import 'package:chat_and_noti/core/config/notification_service.dart';
 import 'package:chat_and_noti/features/auth/model/user_model.dart';
 import 'package:chat_and_noti/features/chat/screens/chat_screen.dart';
@@ -28,6 +29,7 @@ void main() async {
 
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await BubblesService.instance.init();
+  await LocalNotificationService.instance.init();
   await NotificationService.instance.init();
 
   runApp(ProviderScope(child: const MyApp()));
@@ -74,6 +76,11 @@ class MyApp extends StatelessWidget {
             builder: (_) => const AuthGate(),
             settings: settings,
           );
+        } else if (settings.name == SignupScreen.routeName) {
+          return MaterialPageRoute(
+            builder: (_) => SignupScreen(),
+            settings: settings,
+          );
         }
         // navigation bar screen
         else if (settings.name == NavigationBarScreen.routeName) {
@@ -86,11 +93,6 @@ class MyApp extends StatelessWidget {
         else if (settings.name == HomeScreen.routeName) {
           return MaterialPageRoute(
             builder: (_) => HomeScreen(),
-            settings: settings,
-          );
-        } else if (settings.name == SignupScreen.routeName) {
-          return MaterialPageRoute(
-            builder: (_) => SignupScreen(),
             settings: settings,
           );
         } else if (settings.name == ChatScreen.routeName) {

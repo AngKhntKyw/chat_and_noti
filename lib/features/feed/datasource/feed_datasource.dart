@@ -67,7 +67,7 @@ class FeedDatasource {
             .addNotification(
               notiText: feedText,
               context: ref.context,
-              notificationId: docRef.id,
+              feedId: docRef.id,
             );
       });
     } catch (e) {
