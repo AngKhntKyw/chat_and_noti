@@ -12,6 +12,7 @@
         android:label="chat_and_noti"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
+		android:roundIcon="@mipmap/ic_launcher_round"
         android:enableOnBackInvokedCallback="true">
         <activity
             android:name=".MainActivity"

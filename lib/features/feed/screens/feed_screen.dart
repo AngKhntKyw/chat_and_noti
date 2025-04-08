@@ -1,5 +1,6 @@
 import 'package:chat_and_noti/features/feed/repository/feed_repository_provider.dart';
 import 'package:chat_and_noti/features/feed/screens/add_feed_screen.dart';
+import 'package:chat_and_noti/features/feed/widgets/fake_feed_card.dart';
 import 'package:chat_and_noti/features/feed/widgets/feed_card.dart';
 import 'package:chat_and_noti/main.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +29,12 @@ class FeedScreen extends ConsumerWidget {
         stream: ref.read(feedRepositoryProvider).getAllFeeds(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
+            return ListView.builder(
+              itemCount: 10,
+              itemBuilder: (context, index) {
+                return FakeFeedCard();
+              },
+            );
           }
           if (snapshot.hasError) {
             return Center(child: Text(snapshot.error.toString()));

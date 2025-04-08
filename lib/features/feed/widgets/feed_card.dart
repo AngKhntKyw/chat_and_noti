@@ -6,6 +6,7 @@ import 'package:chat_and_noti/features/feed/widgets/feed_Owner.dart';
 import 'package:chat_and_noti/main.dart';
 import 'package:flutter/material.dart';
 import 'package:pinch_zoom_release_unzoom/pinch_zoom_release_unzoom.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 import 'package:tiktok_tap_heart_animation/tiktok_tap_heart_animation.dart';
 
 class FeedCard extends StatelessWidget {

@@ -1,6 +1,7 @@
 import 'package:chat_and_noti/core/util/change_to_time_ago.dart';
 import 'package:chat_and_noti/features/auth/repository/auth_repository_provider.dart';
 import 'package:chat_and_noti/features/feed/model/feed.dart';
+import 'package:chat_and_noti/features/feed/widgets/fake_feed_owner.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -18,7 +19,7 @@ class FeedOwner extends ConsumerWidget {
           .getUserById(userId: feedModel.feed_owner_id),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(child: CircularProgressIndicator());
+          return FakeFeedOwner();
         }
         if (snapshot.hasError) {
           return Center(child: Text(snapshot.error.toString()));

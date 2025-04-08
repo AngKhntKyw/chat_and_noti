@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:chat_and_noti/auth_gate.dart';
 import 'package:chat_and_noti/core/constant/screen_size.dart';
 import 'package:chat_and_noti/features/auth/repository/auth_repository_provider.dart';
+import 'package:chat_and_noti/features/profile/widgets/fake_profile_card.dart';
 import 'package:chat_and_noti/main.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -32,7 +33,7 @@ class ProfileScreen extends ConsumerWidget {
             .getUserById(userId: fireAuth.currentUser!.uid),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
+            return FakeProfileCard();
           }
           if (snapshot.hasError) {
             return Center(child: Text(snapshot.error.toString()));
@@ -81,7 +82,7 @@ class ProfileScreen extends ConsumerWidget {
                   decoration: BoxDecoration(
                     color: Theme.of(
                       context,
-                    ).colorScheme.primary.withValues(alpha: 0.5),
+                    ).colorScheme.primary.withValues(alpha: 0.2),
                     borderRadius: BorderRadius.circular(20),
                   ),
                   margin: const EdgeInsets.all(10),

@@ -5,6 +5,7 @@ import 'package:chat_and_noti/features/auth/model/user_model.dart';
 import 'package:chat_and_noti/features/auth/widgets/common_text_form_field.dart';
 import 'package:chat_and_noti/features/chat/model/message.dart';
 import 'package:chat_and_noti/features/chat/repository/chat_repository_provider.dart';
+import 'package:chat_and_noti/features/chat/widgets/fake_conversation.dart';
 import 'package:chat_and_noti/features/chat/widgets/message_tile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -85,7 +86,7 @@ class ChatScreen extends ConsumerWidget {
               stream: getMessages(ref),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(child: CircularProgressIndicator());
+                  return FakeConversation();
                 }
                 if (snapshot.hasError) {
                   return Center(child: Text(snapshot.error.toString()));

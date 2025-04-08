@@ -17,6 +17,7 @@ import 'package:chat_and_noti/navigation_bar_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
@@ -25,12 +26,14 @@ void main() async {
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(statusBarColor: Colors.transparent),
   );
-  WidgetsFlutterBinding.ensureInitialized();
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await BubblesService.instance.init();
   await LocalNotificationService.instance.init();
   await NotificationService.instance.init();
+  FlutterNativeSplash.remove();
 
   runApp(ProviderScope(child: const MyApp()));
 }
